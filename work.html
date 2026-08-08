@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Our Work — Texacoderzz</title>
+<meta name="description" content="A look at the sites Texacoderzz has shipped for clients." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav-row">
+    <a href="index.html" class="brand"><span class="brand-mark">TX</span>Texa<span class="dot">coderzz</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="work.html" class="active">Work</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="contact.html">Contact</a>
+      <a href="contact.html" class="btn btn-solid nav-cta">Start a project</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero">
+    <div class="wrap">
+      <span class="path-label"><b>work</b></span>
+      <h1>A few builds from the studio</h1>
+      <p>Live client projects shipped so far, with more in the pipeline. Each build is reviewed end-to-end before it goes live.</p>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="grid-3" id="portfolioGrid"></div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap">
+      <h2>Want your business featured here next?</h2>
+      <p>Tell us about your project and we'll put together a plan.</p>
+      <a href="contact.html" class="btn btn-solid">Start a project</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="brand"><span class="brand-mark">TX</span>Texa<span class="dot">coderzz</span></a>
+        <p class="footer-tagline">A student-led web studio building professional websites, faster, with AI in the loop and engineers in charge.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Site</h4>
+        <a class="footer-link" href="about.html">About</a>
+        <a class="footer-link" href="work.html">Our work</a>
+        <a class="footer-link" href="pricing.html">Pricing</a>
+      </div>
+      <div class="footer-col">
+        <h4>Get in touch</h4>
+        <a class="footer-link" href="mailto:texacoderzz@gmail.com">texacoderzz@gmail.com</a>
+        <a class="footer-link" href="tel:+918078460042">8078460042</a>
+        <span class="footer-link" style="cursor:default;">Replies within 24–48 hours</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span class="footer-year"></span> Texacoderzz. All rights reserved.</span>
+      <span>Pathanamthitta, Kerala</span>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+const PROJECTS = [
+  {title:'BNut', desc:'A nutrition mix brand site for blended nuts, seeds, and dried fruits — with combo packs, pricing, and WhatsApp ordering built in.', live:true, url:'https://j-ishnu.github.io/check/', img:'https://j-ishnu.github.io/check/bnut-all.jpg'},
+  {title:'Cherukole Connect', desc:'Official news and services portal for Cherukole Grama Panchayath — updates, achievements, a photo gallery, and online complaint filing in English and Malayalam.', live:true, url:'https://cherukoleconnect.in',
+    mock:`<div class="mock-civic">
+      <div class="mock-civic-badge">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 21h18M5 21V9l7-6 7 6v12M9 21v-6h6v6"/></svg>
+      </div>
+      <div class="mock-civic-lines">
+        <div class="mock-civic-line w70"></div>
+        <div class="mock-civic-line w40"></div>
+        <div class="mock-civic-chips">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>`},
+  {title:'SolarGrid Energy Solutions', desc:'A solar EPC company site covering consultation through maintenance, with subsidy info, a services breakdown, and lead capture for site visits.', live:true, url:'https://solargridkerala.com', img:'https://solargridkerala.com/roof.png'},
+  {title:'Coming soon', desc:'A new client project is currently in development.', live:false},
+  {title:'Coming soon', desc:'A new client project is currently in development.', live:false},
+  {title:'Coming soon', desc:'A new client project is currently in development.', live:false}
+];
+document.getElementById('portfolioGrid').innerHTML = PROJECTS.map(p=>`
+  <div class="card port-card">
+    <div class="port-thumb ${p.live?'':'soon'} ${p.mock?'port-thumb-mock':''}">
+      ${p.mock ? p.mock : (p.img ? `<img src="${p.img}" alt="${p.title} website preview" loading="lazy">` : `<span class="mono">Preview coming soon</span>`)}
+    </div>
+    <div class="team-name" style="font-size:16px;">${p.title}</div>
+    <p class="team-bio">${p.desc}</p>
+    ${p.live
+      ? `<a class="port-link" href="${p.url}" target="_blank" rel="noopener noreferrer">View live site →</a><div class="port-status live">Live</div>`
+      : `<div class="port-status soon">In development</div>`}
+  </div>`).join('');
+</script>
+</body>
+</html>
