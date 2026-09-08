@@ -7,9 +7,9 @@
    /api/create-order is used to open Checkout.
 
    Two independent coffee forms can exist on a page (the full one on
-   support.html with preset chips, and a compact freeform-amount box
-   on index.html) — both are wired through the same createCoffeeHandler
-   so the actual payment logic isn't duplicated. */
+   support.html, and a compact box on index.html) — both are freeform
+   amount only and wired through the same createCoffeeHandler so the
+   actual payment logic isn't duplicated. */
 (function(){
   const MIN_AMOUNT = 10;
   const MAX_AMOUNT = 25000;
@@ -130,25 +130,13 @@
     });
   }
 
-  /* ---- support.html: preset chips + custom amount + optional email ---- */
+  /* ---- support.html: freeform amount + optional email ---- */
   const supportForm = document.getElementById('coffeeForm');
   if(supportForm){
-    const customField = document.getElementById('customAmountField');
-    const customInput = document.getElementById('customAmountInput');
-    const amountRadios = supportForm.querySelectorAll('input[name="coffeeAmount"]');
+    const amountInput = document.getElementById('coffeeAmountInput');
     const emailInput = document.getElementById('coffeeEmail');
     const statusEl = document.getElementById('coffeeStatus');
     const submitBtn = document.getElementById('coffeeSubmit');
-
-    amountRadios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        const isCustom = radio.value === 'custom' && radio.checked;
-        customField.hidden = !isCustom;
-        if(isCustom) customInput.focus();
-        statusEl.className = 'coffee-status';
-        statusEl.textContent = '';
-      });
-    });
 
     createCoffeeHandler({
       form: supportForm,
@@ -156,16 +144,10 @@
       submitBtn,
       idleLabel: 'Buy Us a Coffee ☕',
       resolveAmount(){
-        const checked = supportForm.querySelector('input[name="coffeeAmount"]:checked');
-        if(!checked) return NaN;
-        if(checked.value === 'custom'){
-          const v = Number(customInput.value);
-          return Number.isFinite(v) ? Math.round(v) : NaN;
-        }
-        return Number(checked.value);
+        const v = Number(amountInput.value);
+        return Number.isFinite(v) ? Math.round(v) : NaN;
       },
-      getEmail: () => emailInput.value,
-      onSuccess(){ customField.hidden = true; }
+      getEmail: () => emailInput.value
     });
   }
 

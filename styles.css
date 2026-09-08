@@ -455,23 +455,6 @@ textarea.text-input{resize:vertical; min-height:130px;}
 .coffee-card-title{font-size:19px; margin:14px 0 6px;}
 .coffee-card-sub{color:var(--stone); font-size:14px; line-height:1.6; margin-bottom:24px;}
 
-/* accessible chip selector — real radio inputs, visually hidden but focusable */
-.amount-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(96px,1fr)); gap:10px; margin-bottom:8px;}
-.amount-radio{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;}
-.amount-chip{
-  display:flex; align-items:center; justify-content:center; text-align:center;
-  padding:14px 10px; border-radius:var(--radius-s); border:1px solid var(--line-strong);
-  background:rgba(255,255,255,0.02);
-  font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--paper);
-  cursor:pointer; transition:border-color .15s ease, background .15s ease, color .15s ease, transform .15s ease;
-  user-select:none;
-}
-.amount-chip:hover{border-color:var(--signal); color:var(--signal);}
-.amount-radio:checked + .amount-chip{background:var(--signal); border-color:var(--signal); color:var(--ink); font-weight:600; transform:translateY(-1px);}
-.amount-radio:focus-visible + .amount-chip{outline:2px solid var(--signal); outline-offset:2px;}
-
-.custom-amount-field{margin:16px 0 4px;}
-
 .coffee-submit{position:relative; margin-top:6px;}
 .coffee-submit:disabled{opacity:0.75; cursor:progress;}
 .btn-spinner{display:none; width:14px; height:14px; border-radius:50%; border:2px solid rgba(10,14,23,0.3); border-top-color:var(--ink); flex-shrink:0; animation:coffeeSpin .7s linear infinite;}

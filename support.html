@@ -58,29 +58,12 @@
         <div class="coffee-card">
           <span class="path-label"><b>buy-us-a-coffee.sh</b></span>
           <h3 class="coffee-card-title">Choose an amount</h3>
-          <p class="coffee-card-sub">One-time support, in Indian Rupees. Pick a suggested amount or enter your own.</p>
+          <p class="coffee-card-sub">One-time support, in Indian Rupees. Send whatever feels right.</p>
 
           <form id="coffeeForm" novalidate>
-            <div class="amount-grid" role="radiogroup" aria-label="Choose a contribution amount">
-              <input type="radio" name="coffeeAmount" id="amt49" class="amount-radio" value="49" checked>
-              <label for="amt49" class="amount-chip">₹49</label>
-
-              <input type="radio" name="coffeeAmount" id="amt99" class="amount-radio" value="99">
-              <label for="amt99" class="amount-chip">₹99</label>
-
-              <input type="radio" name="coffeeAmount" id="amt199" class="amount-radio" value="199">
-              <label for="amt199" class="amount-chip">₹199</label>
-
-              <input type="radio" name="coffeeAmount" id="amt499" class="amount-radio" value="499">
-              <label for="amt499" class="amount-chip">₹499</label>
-
-              <input type="radio" name="coffeeAmount" id="amtCustom" class="amount-radio" value="custom">
-              <label for="amtCustom" class="amount-chip amount-chip-custom">Custom</label>
-            </div>
-
-            <div class="custom-amount-field" id="customAmountField" hidden>
-              <label for="customAmountInput" class="field-label">Custom amount (₹10 – ₹25,000)</label>
-              <input type="number" inputmode="numeric" id="customAmountInput" class="text-input" min="10" max="25000" step="1" placeholder="e.g. 250">
+            <div class="form-group">
+              <label for="coffeeAmountInput" class="field-label">Amount (₹)</label>
+              <input type="number" inputmode="numeric" id="coffeeAmountInput" class="text-input" min="10" max="25000" step="1" placeholder="Any amount" required>
             </div>
 
             <div class="form-group">
