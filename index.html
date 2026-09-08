@@ -121,6 +121,35 @@
     </div>
   </section>
 
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="coffee-card coffee-card-compact">
+        <span class="path-label"><b>buy-us-a-coffee.sh</b></span>
+        <h3 class="coffee-card-title">Buy Us a Coffee ☕</h3>
+        <p class="coffee-card-sub">Texacoderzz is built by students, in the gaps between classes. If something we've shipped has helped you, send whatever feels right — no minimums, no menu.</p>
+
+        <form id="homeCoffeeForm" novalidate>
+          <div class="form-group">
+            <label for="homeCoffeeAmount" class="field-label">Amount (₹)</label>
+            <input type="number" inputmode="numeric" id="homeCoffeeAmount" class="text-input" min="10" max="25000" step="1" placeholder="Any amount" required>
+          </div>
+
+          <button type="submit" class="btn btn-solid btn-block coffee-submit" id="homeCoffeeSubmit">
+            <span class="btn-spinner" aria-hidden="true"></span>
+            <span class="btn-label">Buy Us a Coffee ☕</span>
+          </button>
+
+          <div class="coffee-status" id="homeCoffeeStatus" role="status" aria-live="polite"></div>
+        </form>
+
+        <div class="coffee-trust">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          <span>Secured by Razorpay</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer class="site-footer">
@@ -153,5 +182,7 @@
 </footer>
 
 <script src="main.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="coffee.js"></script>
 </body>
 </html>

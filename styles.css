@@ -434,6 +434,9 @@ textarea.text-input{resize:vertical; min-height:130px;}
   padding:32px; box-shadow:0 30px 70px rgba(0,0,0,0.35);
 }
 @media (max-width:600px){.coffee-card{padding:24px 20px;}}
+.coffee-card-compact{max-width:480px; margin:0 auto; text-align:center;}
+.coffee-card-compact .coffee-card-sub{max-width:400px; margin-left:auto; margin-right:auto;}
+.coffee-card-compact .form-group{text-align:left;}
 .coffee-card-title{font-size:19px; margin:14px 0 6px;}
 .coffee-card-sub{color:var(--stone); font-size:14px; line-height:1.6; margin-bottom:24px;}
 

@@ -4,156 +4,187 @@
    trusted server-side — this file just collects it and reflects
    back whatever the server/gateway decide. No secret key ever
    appears here; only the public Razorpay Key ID returned by
-   /api/create-order is used to open Checkout. */
+   /api/create-order is used to open Checkout.
+
+   Two independent coffee forms can exist on a page (the full one on
+   support.html with preset chips, and a compact freeform-amount box
+   on index.html) — both are wired through the same createCoffeeHandler
+   so the actual payment logic isn't duplicated. */
 (function(){
   const MIN_AMOUNT = 10;
   const MAX_AMOUNT = 25000;
 
-  const form = document.getElementById('coffeeForm');
-  if(!form) return;
-
-  const customField = document.getElementById('customAmountField');
-  const customInput = document.getElementById('customAmountInput');
-  const amountRadios = form.querySelectorAll('input[name="coffeeAmount"]');
-  const emailInput = document.getElementById('coffeeEmail');
-  const statusEl = document.getElementById('coffeeStatus');
-  const submitBtn = document.getElementById('coffeeSubmit');
-  const submitLabel = submitBtn.querySelector('.btn-label');
-
-  let isProcessing = false;
-
-  amountRadios.forEach(radio => {
-    radio.addEventListener('change', () => {
-      const isCustom = radio.value === 'custom' && radio.checked;
-      customField.hidden = !isCustom;
-      if(isCustom) customInput.focus();
-      clearStatus();
-    });
-  });
-
   function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
-  function getSelectedAmount(){
-    const checked = form.querySelector('input[name="coffeeAmount"]:checked');
-    if(!checked) return NaN;
-    if(checked.value === 'custom'){
-      const v = Number(customInput.value);
-      return Number.isFinite(v) ? Math.round(v) : NaN;
+  function createCoffeeHandler({ form, statusEl, submitBtn, idleLabel, resolveAmount, getEmail, onSuccess }){
+    if(!form) return;
+    const submitLabel = submitBtn.querySelector('.btn-label');
+    let isProcessing = false;
+
+    function setStatus(kind, text){
+      statusEl.className = 'coffee-status ' + kind;
+      statusEl.textContent = text;
     }
-    return Number(checked.value);
-  }
-
-  function setStatus(kind, text){
-    statusEl.className = 'coffee-status ' + kind;
-    statusEl.textContent = text;
-  }
-  function clearStatus(){
-    statusEl.className = 'coffee-status';
-    statusEl.textContent = '';
-  }
-  function setLoading(on){
-    submitBtn.disabled = on;
-    submitBtn.classList.toggle('is-loading', on);
-    submitLabel.textContent = on ? 'Processing…' : 'Buy Us a Coffee ☕';
-  }
-  function finishProcessing(){
-    isProcessing = false;
-    setLoading(false);
-  }
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    if(isProcessing) return; // guards against double submits / double-clicks
-
-    const amount = getSelectedAmount();
-    const email = emailInput.value.trim();
-
-    if(!Number.isInteger(amount) || amount < MIN_AMOUNT || amount > MAX_AMOUNT){
-      setStatus('error', `Please choose an amount between ₹${MIN_AMOUNT} and ₹${MAX_AMOUNT}.`);
-      (customField.hidden ? form.querySelector('input[name="coffeeAmount"]:checked + .amount-chip') : customInput)?.focus();
-      return;
+    function setLoading(on){
+      submitBtn.disabled = on;
+      submitBtn.classList.toggle('is-loading', on);
+      if(submitLabel) submitLabel.textContent = on ? 'Processing…' : idleLabel;
     }
-    if(email && !validEmail(email)){
-      setStatus('error', "That email doesn't look right — you can also leave it blank.");
-      emailInput.focus();
-      return;
+    function finishProcessing(){
+      isProcessing = false;
+      setLoading(false);
     }
 
-    isProcessing = true;
-    setLoading(true);
-    setStatus('loading', 'Setting up secure checkout…');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if(isProcessing) return; // guards against double submits / double-clicks
 
-    let orderData;
-    try {
-      const orderRes = await fetch('/api/create-order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount, email: email || undefined })
-      });
-      orderData = await orderRes.json().catch(() => ({}));
-      if(!orderRes.ok){
-        throw new Error(orderData.error || 'Could not start payment. Please try again.');
+      const amount = resolveAmount();
+      const email = getEmail ? getEmail().trim() : '';
+
+      if(!Number.isInteger(amount) || amount < MIN_AMOUNT || amount > MAX_AMOUNT){
+        setStatus('error', `Please enter an amount between ₹${MIN_AMOUNT} and ₹${MAX_AMOUNT}.`);
+        return;
       }
-    } catch(err){
-      setStatus('error', err.message || 'Network error — please check your connection and try again.');
-      finishProcessing();
-      return;
-    }
+      if(email && !validEmail(email)){
+        setStatus('error', "That email doesn't look right — you can also leave it blank.");
+        return;
+      }
 
-    if(typeof Razorpay === 'undefined'){
-      setStatus('error', 'Payment checkout could not load. Please check your connection and try again.');
-      finishProcessing();
-      return;
-    }
+      isProcessing = true;
+      setLoading(true);
+      setStatus('loading', 'Setting up secure checkout…');
 
-    setStatus('loading', 'Opening secure checkout…');
+      let orderData;
+      try {
+        const orderRes = await fetch('/api/create-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount, email: email || undefined })
+        });
+        orderData = await orderRes.json().catch(() => ({}));
+        if(!orderRes.ok){
+          throw new Error(orderData.error || 'Could not start payment. Please try again.');
+        }
+      } catch(err){
+        setStatus('error', err.message || 'Network error — please check your connection and try again.');
+        finishProcessing();
+        return;
+      }
 
-    const rzp = new Razorpay({
-      key: orderData.keyId,
-      amount: orderData.amount,
-      currency: orderData.currency,
-      order_id: orderData.orderId,
-      name: 'Texacoderzz',
-      description: 'Buy us a coffee ☕',
-      image: 'logo.png',
-      prefill: email ? { email } : undefined,
-      theme: { color: '#3E7BFA' },
-      handler: async function(response){
-        setStatus('loading', 'Verifying your payment…');
-        try {
-          const verifyRes = await fetch('/api/verify-payment', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(response)
-          });
-          const verifyData = await verifyRes.json().catch(() => ({}));
-          if(verifyRes.ok && verifyData.success){
-            setStatus('success', 'Thank you! ☕ Your support means a lot — payment received and verified.');
-            form.reset();
-            customField.hidden = true;
-          } else {
-            setStatus('error', 'We could not verify that payment. If money was deducted, please email us at texacoderzz@gmail.com and we\'ll sort it out.');
+      if(typeof Razorpay === 'undefined'){
+        setStatus('error', 'Payment checkout could not load. Please check your connection and try again.');
+        finishProcessing();
+        return;
+      }
+
+      setStatus('loading', 'Opening secure checkout…');
+
+      const rzp = new Razorpay({
+        key: orderData.keyId,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        order_id: orderData.orderId,
+        name: 'Texacoderzz',
+        description: 'Buy us a coffee ☕',
+        image: 'logo.png',
+        prefill: email ? { email } : undefined,
+        theme: { color: '#3E7BFA' },
+        handler: async function(response){
+          setStatus('loading', 'Verifying your payment…');
+          try {
+            const verifyRes = await fetch('/api/verify-payment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(response)
+            });
+            const verifyData = await verifyRes.json().catch(() => ({}));
+            if(verifyRes.ok && verifyData.success){
+              setStatus('success', 'Thank you! ☕ Your support means a lot — payment received and verified.');
+              form.reset();
+              if(onSuccess) onSuccess();
+            } else {
+              setStatus('error', 'We could not verify that payment. If money was deducted, please email us at texacoderzz@gmail.com and we\'ll sort it out.');
+            }
+          } catch(err){
+            setStatus('error', 'Verification failed due to a network error. If money was deducted, please email us and we\'ll sort it out.');
+          } finally {
+            finishProcessing();
           }
-        } catch(err){
-          setStatus('error', 'Verification failed due to a network error. If money was deducted, please email us and we\'ll sort it out.');
-        } finally {
-          finishProcessing();
+        },
+        modal: {
+          ondismiss: function(){
+            // User closed the checkout without paying — friendly, not an error.
+            setStatus('cancelled', 'Checkout closed — no payment was made.');
+            finishProcessing();
+          }
         }
+      });
+
+      rzp.on('payment.failed', function(response){
+        setStatus('error', 'Payment failed: ' + (response?.error?.description || 'please try again.'));
+        finishProcessing();
+      });
+
+      rzp.open();
+    });
+  }
+
+  /* ---- support.html: preset chips + custom amount + optional email ---- */
+  const supportForm = document.getElementById('coffeeForm');
+  if(supportForm){
+    const customField = document.getElementById('customAmountField');
+    const customInput = document.getElementById('customAmountInput');
+    const amountRadios = supportForm.querySelectorAll('input[name="coffeeAmount"]');
+    const emailInput = document.getElementById('coffeeEmail');
+    const statusEl = document.getElementById('coffeeStatus');
+    const submitBtn = document.getElementById('coffeeSubmit');
+
+    amountRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        const isCustom = radio.value === 'custom' && radio.checked;
+        customField.hidden = !isCustom;
+        if(isCustom) customInput.focus();
+        statusEl.className = 'coffee-status';
+        statusEl.textContent = '';
+      });
+    });
+
+    createCoffeeHandler({
+      form: supportForm,
+      statusEl,
+      submitBtn,
+      idleLabel: 'Buy Us a Coffee ☕',
+      resolveAmount(){
+        const checked = supportForm.querySelector('input[name="coffeeAmount"]:checked');
+        if(!checked) return NaN;
+        if(checked.value === 'custom'){
+          const v = Number(customInput.value);
+          return Number.isFinite(v) ? Math.round(v) : NaN;
+        }
+        return Number(checked.value);
       },
-      modal: {
-        ondismiss: function(){
-          // User closed the checkout without paying — friendly, not an error.
-          setStatus('cancelled', 'Checkout closed — no payment was made.');
-          finishProcessing();
-        }
+      getEmail: () => emailInput.value,
+      onSuccess(){ customField.hidden = true; }
+    });
+  }
+
+  /* ---- index.html: compact box, freeform amount only, no presets ---- */
+  const homeForm = document.getElementById('homeCoffeeForm');
+  if(homeForm){
+    const amountInput = document.getElementById('homeCoffeeAmount');
+    const statusEl = document.getElementById('homeCoffeeStatus');
+    const submitBtn = document.getElementById('homeCoffeeSubmit');
+
+    createCoffeeHandler({
+      form: homeForm,
+      statusEl,
+      submitBtn,
+      idleLabel: 'Buy Us a Coffee ☕',
+      resolveAmount(){
+        const v = Number(amountInput.value);
+        return Number.isFinite(v) ? Math.round(v) : NaN;
       }
     });
-
-    rzp.on('payment.failed', function(response){
-      setStatus('error', 'Payment failed: ' + (response?.error?.description || 'please try again.'));
-      finishProcessing();
-    });
-
-    rzp.open();
-  });
+  }
 })();
