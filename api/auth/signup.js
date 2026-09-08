@@ -64,8 +64,6 @@ module.exports = async (req, res) => {
       return res.status(409).json({ error: 'An account with this email already exists. Try logging in instead.' });
     }
     console.error('signup: unexpected error', err);
-    // TEMPORARY — surfaces the real error to the client for debugging.
-    // Revert this before real users sign up; it can leak infra details.
-    return res.status(500).json({ error: 'Something went wrong creating your account. Please try again.', debug: err && (err.message || String(err)) });
+    return res.status(500).json({ error: 'Something went wrong creating your account. Please try again.' });
   }
 };
