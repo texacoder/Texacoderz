@@ -133,13 +133,21 @@ ul{list-style:none;}
 .nav-toggle{display:none; background:none; border:none; color:var(--paper); padding:8px;}
 
 @media (max-width:820px){
+  /* .nav-row doubles as .wrap, so it's the positioning anchor for the
+     dropdown below. Deliberately NOT position:fixed here: .site-header
+     has backdrop-filter, and per spec that makes it the containing
+     block for fixed-position descendants — which broke this panel's
+     coverage of the viewport and let page content show through it. */
+  .nav-row{position:relative;}
   .nav-links{
-    position:fixed; inset:64px 0 0 0; background:var(--ink); z-index:49;
+    position:absolute; top:100%; left:-28px; right:-28px; min-height:100vh;
+    background:var(--ink); z-index:49; border-top:1px solid var(--line-strong);
+    box-shadow:0 24px 48px rgba(0,0,0,0.5);
     flex-direction:column; align-items:stretch; padding:20px 24px; gap:2px;
     transform:translateY(-8px); opacity:0; pointer-events:none; transition:opacity .2s, transform .2s;
   }
   .nav-links.open{transform:translateY(0); opacity:1; pointer-events:auto;}
-  .nav-links a{padding:16px 8px; font-size:15px; border-bottom:1px solid var(--line);}
+  .nav-links a{padding:16px 8px; font-size:15px; border-bottom:1px solid var(--line); background:var(--ink);}
   .nav-cta{margin-left:0; margin-top:14px;}
   .nav-toggle{display:block;}
 }
@@ -391,6 +399,8 @@ textarea.text-input{resize:vertical; min-height:130px;}
 .cta-band h2{font-size:clamp(26px,4vw,38px); margin-bottom:16px;}
 .cta-band p{color:var(--stone); margin-bottom:32px; font-size:16px;}
 .cta-band .btn{margin:0 6px;}
+.cta-band-actions{display:flex; justify-content:center; flex-wrap:wrap; gap:14px;}
+.cta-band-actions .btn{margin:0;}
 
 /* ---------- Footer ---------- */
 .site-footer{padding:56px 0 28px;}
