@@ -348,7 +348,10 @@
     setLoading(btn, false);
 
     if(!ok){
-      showAlert('signupAlert', data.error || 'Something went wrong. Please try again.', 'error');
+      // TEMPORARY: appends server debug detail — revert alongside the
+      // matching change in api/auth/signup.js once diagnosed.
+      const msg = (data.error || 'Something went wrong. Please try again.') + (data.debug ? ' [' + data.debug + ']' : '');
+      showAlert('signupAlert', msg, 'error');
       return;
     }
     renderLoggedIn(data);
