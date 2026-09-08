@@ -100,15 +100,18 @@ ul{list-style:none;}
   display:flex; align-items:center; justify-content:space-between;
   padding:18px 0;
 }
-.brand{display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-weight:600; font-size:19px;}
+.brand{display:flex; align-items:center; gap:11px; font-family:'Fraunces',serif; font-weight:600; font-size:19px; letter-spacing:-0.01em; transition:opacity .15s;}
+.brand:hover{opacity:0.85;}
 .brand .dot{color:var(--signal);}
 .brand-mark{
-  width:30px; height:30px; border-radius:7px; background:var(--signal);
+  width:34px; height:34px; border-radius:8px; background:var(--signal);
   display:flex; align-items:center; justify-content:center;
   font-family:'IBM Plex Mono',monospace; font-weight:700; font-size:13px; color:var(--ink);
   flex-shrink:0;
   overflow:hidden;
+  transition:transform .18s ease;
 }
+.brand:hover .brand-mark{transform:translateY(-1px);}
 /* When a real logo image is used instead of the "TX" text mark, this
    variant drops the solid orange fill and gives the image a soft dark
    plate + hairline ring so a blue-toned mark reads cleanly against the
@@ -116,12 +119,14 @@ ul{list-style:none;}
 .brand-mark.has-img{
   background:var(--ink-elev);
   border:1px solid var(--line-strong);
-  padding:4px;
+  padding:5px;
+  box-shadow:0 6px 16px rgba(0,0,0,0.3);
 }
 .brand-mark.has-img img{
   width:100%; height:100%; object-fit:contain; display:block;
 }
-.brand-mark-lg{width:64px; height:64px; border-radius:14px;}
+.brand-mark-lg{width:56px; height:56px; border-radius:13px;}
+.brand-lg{gap:16px; font-size:25px;}
 .nav-links{display:flex; align-items:center; gap:6px;}
 .nav-links a{
   font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--stone);
@@ -406,7 +411,7 @@ textarea.text-input{resize:vertical; min-height:130px;}
 .site-footer{padding:56px 0 28px;}
 .footer-top{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px; padding-bottom:32px; border-bottom:1px solid var(--line);}
 @media (max-width:700px){.footer-top{grid-template-columns:1fr; gap:26px;}}
-.footer-tagline{color:var(--stone); font-size:13.5px; max-width:280px; line-height:1.65; margin-top:12px;}
+.footer-tagline{color:var(--stone); font-size:13.5px; max-width:280px; line-height:1.65; margin-top:16px;}
 .footer-col h4{font-family:'IBM Plex Mono',monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--stone-dim); margin-bottom:16px;}
 .footer-link{display:block; color:var(--stone); font-size:14px; margin-bottom:11px; transition:color .15s;}
 .footer-link:hover{color:var(--signal);}
