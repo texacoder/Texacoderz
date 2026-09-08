@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Buy Us a Coffee — Texacoderzz</title>
+<meta name="description" content="Support Texacoderzz — help a student-led web studio keep building projects, learning, and shipping useful digital experiences." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav-row">
+    <a href="index.html" class="brand"><span class="brand-mark">TX</span>Texa<span class="dot">coderzz</span></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="work.html">Work</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="contact.html">Contact</a>
+      <a href="support.html" class="active">Support ☕</a>
+      <a href="contact.html" class="btn btn-solid nav-cta">Start a project</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero">
+    <div class="wrap">
+      <span class="path-label"><b>support</b></span>
+      <h1>Buy Us a Coffee ☕</h1>
+      <p>Texacoderzz is a student-led studio — we build client sites during the day and our own tools, experiments, and learning projects in the gaps between. If something we've built has been useful to you, a coffee helps us keep the lights (and the terminal) on.</p>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <div class="coffee-layout">
+
+        <div class="coffee-intro">
+          <span class="path-label"><b>why-it-helps</b></span>
+          <h2>Where your support goes</h2>
+          <p>No sponsors, no ad revenue — just a few students and a shared laptop budget. Every contribution, big or small, goes straight back into what we build next.</p>
+          <ul class="custom-band-list">
+            <li><span class="custom-check">✓</span> Late-night builds &amp; side experiments</li>
+            <li><span class="custom-check">✓</span> Free resources for students learning to code</li>
+            <li><span class="custom-check">✓</span> Keeping Texacoderzz's tools, domain &amp; hosting running</li>
+          </ul>
+        </div>
+
+        <div class="coffee-card">
+          <span class="path-label"><b>buy-us-a-coffee.sh</b></span>
+          <h3 class="coffee-card-title">Choose an amount</h3>
+          <p class="coffee-card-sub">One-time support, in Indian Rupees. Pick a suggested amount or enter your own.</p>
+
+          <form id="coffeeForm" novalidate>
+            <div class="amount-grid" role="radiogroup" aria-label="Choose a contribution amount">
+              <input type="radio" name="coffeeAmount" id="amt49" class="amount-radio" value="49" checked>
+              <label for="amt49" class="amount-chip">₹49</label>
+
+              <input type="radio" name="coffeeAmount" id="amt99" class="amount-radio" value="99">
+              <label for="amt99" class="amount-chip">₹99</label>
+
+              <input type="radio" name="coffeeAmount" id="amt199" class="amount-radio" value="199">
+              <label for="amt199" class="amount-chip">₹199</label>
+
+              <input type="radio" name="coffeeAmount" id="amt499" class="amount-radio" value="499">
+              <label for="amt499" class="amount-chip">₹499</label>
+
+              <input type="radio" name="coffeeAmount" id="amtCustom" class="amount-radio" value="custom">
+              <label for="amtCustom" class="amount-chip amount-chip-custom">Custom</label>
+            </div>
+
+            <div class="custom-amount-field" id="customAmountField" hidden>
+              <label for="customAmountInput" class="field-label">Custom amount (₹10 – ₹25,000)</label>
+              <input type="number" inputmode="numeric" id="customAmountInput" class="text-input" min="10" max="25000" step="1" placeholder="e.g. 250">
+            </div>
+
+            <div class="form-group">
+              <label for="coffeeEmail" class="field-label">Email (optional, for your receipt)</label>
+              <input type="email" id="coffeeEmail" class="text-input" placeholder="you@example.com">
+            </div>
+
+            <button type="submit" class="btn btn-solid btn-block coffee-submit" id="coffeeSubmit">
+              <span class="btn-spinner" aria-hidden="true"></span>
+              <span class="btn-label">Buy Us a Coffee ☕</span>
+            </button>
+
+            <div class="coffee-status" id="coffeeStatus" role="status" aria-live="polite"></div>
+          </form>
+
+          <div class="coffee-trust">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <span>Payments are processed securely by Razorpay · UPI, cards, netbanking &amp; wallets</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="brand"><span class="brand-mark">TX</span>Texa<span class="dot">coderzz</span></a>
+        <p class="footer-tagline">A student-led web studio building professional websites, faster, with AI in the loop and engineers in charge.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Site</h4>
+        <a class="footer-link" href="about.html">About</a>
+        <a class="footer-link" href="work.html">Our work</a>
+        <a class="footer-link" href="pricing.html">Pricing</a>
+        <a class="footer-link" href="support.html">Buy us a coffee ☕</a>
+      </div>
+      <div class="footer-col">
+        <h4>Get in touch</h4>
+        <a class="footer-link" href="mailto:texacoderzz@gmail.com">texacoderzz@gmail.com</a>
+        <a class="footer-link" href="tel:+918078460042">8078460042</a>
+        <span class="footer-link" style="cursor:default;">Replies within 24–48 hours</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span class="footer-year"></span> Texacoderzz. All rights reserved.</span>
+      <span>Pathanamthitta, Kerala</span>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="coffee.js"></script>
+</body>
+</html>
