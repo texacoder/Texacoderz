@@ -2,7 +2,8 @@
 
 Static site (`*.html`, `styles.css`, `main.js`) plus a small set of
 serverless functions under `/api` that power the **Buy Us a Coffee**
-payment flow (`support.html`, `coffee.js`).
+payment flow (`support.html`, `coffee.js`) and the **account system**
+(Login / Sign Up, `auth.js`, `reset-password.html`).
 
 ## Local development
 
@@ -61,3 +62,50 @@ production. **Never commit `.env`.**
 If you ever paste a secret into a chat, an issue, or a commit by mistake,
 treat it as compromised and regenerate it immediately from the Razorpay
 Dashboard.
+
+## Accounts — Login / Sign Up
+
+Every page's nav shows Login/Sign Up (or the account menu + Log Out, once
+signed in) via `auth.js`, backed by `/api/auth/*` and a Postgres database.
+Passwords are hashed with bcrypt before they're ever written to the
+database — the plaintext password never reaches storage or a log line.
+Sessions are an HttpOnly, signed-JWT cookie (`texa_session`, 30-day
+expiry), so a visitor stays logged in across page refreshes and after
+closing/reopening the browser, with no token ever stored in
+localStorage/sessionStorage for page JS to read.
+
+### One-time setup
+
+1. **Provision a Postgres database.** Easiest path: Vercel dashboard →
+   your project → Storage → Create Database → Postgres. Linking it to the
+   project injects `POSTGRES_URL` automatically — nothing else to
+   configure. (Any other Postgres host works too; just set `POSTGRES_URL`
+   yourself.)
+2. **Run the schema once**: open the database's query editor (or
+   `psql "$POSTGRES_URL" -f db/schema.sql`) and run `db/schema.sql`. It
+   creates the `users` and `password_resets` tables.
+3. **Set `SESSION_SECRET`** (see `.env.example` for how to generate one).
+   Required — without it, signup/login/etc. return a 500.
+4. **Optional — password reset emails**: set `RESEND_API_KEY` and
+   `RESEND_FROM_EMAIL` (see `.env.example`) to actually deliver the
+   "forgot password" email via [Resend](https://resend.com). Without
+   these, forgot-password requests still succeed from the visitor's point
+   of view (so the response can never be used to probe which emails have
+   accounts) but no email is sent — check the Vercel function logs.
+
+### How it works
+
+- `POST /api/auth/signup`, `/login`, `/logout`, `GET /api/auth/me` —
+  account creation, login, logout, and "am I logged in" (used by `auth.js`
+  to decide the nav state on every page load).
+- `POST /api/auth/forgot-password` issues a one-hour, single-use reset
+  token (only its SHA-256 hash is stored) and emails a link to
+  `reset-password.html?token=...`. `POST /api/auth/reset-password`
+  verifies it, sets the new password, and invalidates every other
+  session for that account by bumping a `session_version` counter on the
+  user — so a stolen or leaked old session cookie stops working the
+  moment a password is reset.
+- Same enumeration-resistance approach as the payment endpoints' careful
+  server-side validation: login and forgot-password return identical,
+  generic responses whether or not the email exists, so neither can be
+  used to test which addresses are registered.

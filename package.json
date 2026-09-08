@@ -1,8 +1,11 @@
 {
   "name": "texacoderz-website",
   "private": true,
-  "description": "Texacoderzz static website with serverless payment functions for the Buy Us a Coffee feature.",
+  "description": "Texacoderzz static website with serverless payment and account functions.",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.23.0",
     "razorpay": "^2.9.4"
   }
 }
