@@ -14,15 +14,15 @@
 
 <header class="site-header">
   <div class="wrap nav-row">
-    <a href="index.html" class="brand"><span class="brand-mark">TX</span><span class="brand-name">Texa<span class="dot">coderzz</span></span></a>
+    <a href="/" class="brand"><span class="brand-mark">TX</span><span class="brand-name">Texa<span class="dot">coderzz</span></span></a>
     <nav class="nav-links" id="navLinks">
-      <a href="index.html">Home</a>
-      <a href="about.html">About</a>
-      <a href="work.html">Work</a>
-      <a href="pricing.html" class="active">Pricing</a>
-      <a href="contact.html">Contact</a>
-      <a href="support.html">Support ☕</a>
-      <a href="contact.html" class="btn btn-solid nav-cta">Start a project</a>
+      <a href="/">Home</a>
+      <a href="/about">About</a>
+      <a href="/work">Work</a>
+      <a href="/pricing" class="active">Pricing</a>
+      <a href="/contact">Contact</a>
+      <a href="/support">Support ☕</a>
+      <a href="/contact" class="btn btn-solid nav-cta">Start a project</a>
     </nav>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
@@ -58,7 +58,7 @@
             <li><span class="custom-check">✓</span> Typically ₹35,000–₹45,000 depending on scope</li>
             <li><span class="custom-check">✓</span> Free scoping call, no obligation to proceed</li>
           </ul>
-          <a href="contact.html" class="btn btn-solid">Get a custom quote</a>
+          <a href="/contact" class="btn btn-solid">Get a custom quote</a>
         </div>
         <div class="custom-band-visual">
           <div class="custom-visual-row"><span class="mono">dashboards</span><span class="custom-visual-bar" style="--w:78%"></span></div>
@@ -118,7 +118,7 @@
     <div class="wrap">
       <h2>Not sure which plan fits?</h2>
       <p>Tell us about your business and we'll recommend the right one.</p>
-      <a href="contact.html" class="btn btn-solid">Talk to us</a>
+      <a href="/contact" class="btn btn-solid">Talk to us</a>
     </div>
   </section>
 
@@ -128,15 +128,15 @@
   <div class="wrap">
     <div class="footer-top">
       <div>
-        <a href="index.html" class="brand brand-lg"><span class="brand-mark brand-mark-lg">TX</span><span class="brand-name">Texa<span class="dot">coderzz</span></span></a>
+        <a href="/" class="brand brand-lg"><span class="brand-mark brand-mark-lg">TX</span><span class="brand-name">Texa<span class="dot">coderzz</span></span></a>
         <p class="footer-tagline">A student-led web studio building professional websites, faster, with AI in the loop and engineers in charge.</p>
       </div>
       <div class="footer-col">
         <h4>Site</h4>
-        <a class="footer-link" href="about.html">About</a>
-        <a class="footer-link" href="work.html">Our work</a>
-        <a class="footer-link" href="pricing.html">Pricing</a>
-        <a class="footer-link" href="support.html">Buy us a coffee ☕</a>
+        <a class="footer-link" href="/about">About</a>
+        <a class="footer-link" href="/work">Our work</a>
+        <a class="footer-link" href="/pricing">Pricing</a>
+        <a class="footer-link" href="/support">Buy us a coffee ☕</a>
       </div>
       <div class="footer-col">
         <h4>Get in touch</h4>
@@ -147,7 +147,7 @@
     </div>
     <div class="footer-bottom">
       <span>© <span class="footer-year"></span> Texacoderzz. All rights reserved.</span>
-      <span class="footer-legal-links"><a href="privacy.html">Privacy</a><span class="sep">·</span><a href="terms.html">Terms</a><span class="sep">·</span><a href="refund.html">Refunds</a></span>
+      <span class="footer-legal-links"><a href="/privacy">Privacy</a><span class="sep">·</span><a href="/terms">Terms</a><span class="sep">·</span><a href="/refund">Refunds</a></span>
       <span>Pathanamthitta, Kerala</span>
     </div>
   </div>
@@ -174,7 +174,7 @@ document.getElementById('pricingGrid').innerHTML = PLANS.map(p=>`
     <ul class="price-list">
       ${p.features.map(f=>`<li>${check()} ${f}</li>`).join('')}
     </ul>
-    <a href="contact.html" class="btn ${p.popular?'btn-solid':'btn-line'} btn-block">Get started</a>
+    <a href="/contact" class="btn ${p.popular?'btn-solid':'btn-line'} btn-block">Get started</a>
   </div>`).join('');
 
 /* Comparison table */

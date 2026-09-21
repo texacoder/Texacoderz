@@ -63,7 +63,7 @@ module.exports = async (req, res) => {
         values (${user.id}, ${tokenHash}, ${expiresAt})
       `;
 
-      const resetUrl = `${resolveSiteUrl(req)}/reset-password.html?token=${token}`;
+      const resetUrl = `${resolveSiteUrl(req)}/reset-password?token=${token}`;
       await sendPasswordResetEmail({ to: email, resetUrl });
     }
 
