@@ -272,20 +272,6 @@ ul{list-style:none;}
   display:flex; align-items:center; justify-content:flex-start;
   padding:22px;
 }
-.mock-civic{display:flex; align-items:flex-start; gap:14px; width:100%;}
-.mock-civic-badge{
-  width:38px; height:38px; border-radius:9px; background:rgba(62,123,250,0.18);
-  border:1px solid rgba(62,123,250,0.4); color:var(--signal);
-  display:flex; align-items:center; justify-content:center; flex-shrink:0;
-}
-.mock-civic-lines{flex-grow:1; padding-top:4px;}
-.mock-civic-line{height:9px; border-radius:4px; background:rgba(245,247,250,0.16); margin-bottom:9px;}
-.mock-civic-line.w70{width:70%;}
-.mock-civic-line.w40{width:40%; background:rgba(245,247,250,0.1);}
-.mock-civic-chips{display:flex; gap:6px; margin-top:14px;}
-.mock-civic-chips span{width:26px; height:6px; border-radius:3px; background:rgba(245,166,35,0.5);}
-.mock-civic-chips span:nth-child(2){background:rgba(62,123,250,0.5);}
-.mock-civic-chips span:nth-child(3){background:rgba(245,247,250,0.22);}
 .port-status{
   display:inline-flex; align-items:center; gap:6px; font-family:'IBM Plex Mono',monospace; font-size:11.5px; margin-top:14px;
 }
