@@ -93,12 +93,12 @@ const PROJECTS = [
   {title:'Cherukole Connect', desc:'Official news and services portal for Cherukole Grama Panchayath, covering updates, achievements, a photo gallery, and online complaint filing in English and Malayalam.', live:true, url:'https://cherukoleconnect.in', img:'cherukole-connect.webp'},
   {title:'SolarGrid Energy Solutions', desc:'A solar EPC company site covering consultation through maintenance, with subsidy info, a services breakdown, and lead capture for site visits.', live:true, url:'https://solargridkerala.com', img:'https://solargridkerala.com/roof.png'},
   {title:'BNut', desc:'A nutrition mix brand site for blended nuts, seeds, and dried fruits, with combo packs, pricing, and WhatsApp ordering built in.', live:true, url:'https://j-ishnu.github.io/check/', img:'https://j-ishnu.github.io/check/bnut-all.jpg'},
-  {title:'Coming soon', desc:'A new client project is currently in development.', live:false},
+  {title:'Exora Store', desc:'An online store site with product browsing and checkout built in.', live:true, url:'https://exorastore.com', img:'https://www.exorastore.com/logo-mark-96.png', contain:true},
   {title:'Coming soon', desc:'A new client project is currently in development.', live:false}
 ];
 document.getElementById('portfolioGrid').innerHTML = PROJECTS.map(p=>`
   <div class="card port-card">
-    <div class="port-thumb ${p.live?'':'soon'} ${p.mock?'port-thumb-mock':''}">
+    <div class="port-thumb ${p.live?'':'soon'} ${p.mock?'port-thumb-mock':''} ${p.contain?'port-thumb-contain':''}">
       ${p.mock ? p.mock : (p.img ? `<img src="${p.img}" alt="${p.title} website preview" loading="lazy">` : `<span class="mono">Preview coming soon</span>`)}
     </div>
     <div class="team-name" style="font-size:16px;">${p.title}</div>
